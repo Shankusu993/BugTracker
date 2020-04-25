@@ -1,0 +1,46 @@
+{% extends 'layout.html' %}
+{% block content %}
+<hr>
+<div class="card text-center text-white bg-dark border-info">
+    <div class="card-header">
+        About BugTracker
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">What is BugTracker ?</h5>
+      <p class="card-text">BugTracker is a robust, featureful and mature defect-tracking system, or bug-tracking system. Bug-tracking systems allow teams of developers to keep track of outstanding bugs, problems, issues, enhancement and other change requests in their products effectively. Simple defect-tracking capabilities are often built into integrated source code management environments such as Github or other web-based or locally-installed equivalents. BugTacker comes into play when organizations outgrow the capabilities of those systems - for example, because they want workflow management, or bug visibility control (security), or custom fields.</p>
+    </div>
+  </div>
+  <hr>
+  {% if current_user.is_authenticated == False %}
+  <div class="bg-dark border-info d-flex text-light" style="max-width: auto;">
+    <div class="card border-info bg-dark">
+        <div class="card-header">New to BugTracker ?</div>
+        <div class="card-body text-light">
+            
+          <p class="card-text">We have tons of projects being tracked by our system</p>
+          <h5 class="card-title"><a class="btn btn-primary" href="{{ url_for('explore') }}">Explore Now</a></h5>
+          <p class="card-text">Liked BugTracker ? Signing Up today !</p>
+          <h5 class="card-title"><a class="btn btn-success" href="{{ url_for('register') }}">Sign Up</a></h5>
+        </div>
+    </div>
+    <div class="card border-info bg-dark ml-auto" style="max-width: auto;">
+        <div class="card-header">Contact Us</div>
+        <div class="card-body text-light">
+            <p class="card-text">You can write to us below</p>
+            <h5 class="card-title"><a class="btn btn-primary" href="mailto:pankaj08072000@gmail.com">Mail</a></h5>
+        </div>
+    </div>
+    <div class="card border-info bg-dark ml-auto" style="max-width: auto;">
+        <div class="card-header">Existing User ?</div>
+        <div class="card-body text-light">
+            <p class="card-text">Login to continue with your projects</p>
+          <h5 class="card-title"><a class="btn btn-success" href="{{ url_for('login') }}">Login </a></h5>
+          <p class="card-text">You can anonymously explore projects without logging in</p>
+          <h5 class="card-title"><a class="btn btn-primary" href="{{ url_for('explore') }}">Explore Now</a></h5>
+          <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+        </div>
+    </div>
+    {% endif %}
+  </div>
+
+{% endblock content %}

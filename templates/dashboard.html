@@ -1,0 +1,37 @@
+ {% extends "layout.html" %}
+ {% block content %}
+
+ <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+<hr>
+ 	<div class="content-section alum">
+		 <img class="rounded-circle account pro" src = "{{ image_file }}" />
+		 <form method="POST" action="" enctype="multipart/form-data">
+			 <div class="form-group pro-pic">
+				{{ form.picture(class="form-control-file")}}
+				{{form.submit(class="btn btn-outline-info")}}
+			</div>
+		</form>
+
+ 			</div>
+ 		</div>
+
+
+ 		
+	 </div>
+ 
+	 <div class="card text-info bg-dark border-info mx-auto mb-3" style="width: 25rem;">
+		<div class="card-body">
+		  <h5 class="card-title text-center text-light">{{ user.username }}</h5>
+		</div>
+		<ul class="list-group list-group-flush bg-dark">
+		  <li class="list-group-item bg-dark">Name: {{ user.name }}</li>
+		  <li class="list-group-item bg-dark">Email: {{ user.email }}</li>
+		  <li class="list-group-item bg-dark">Phone: {{ user.phone }}</li>
+		</ul>
+		<div class="card-body text-center">
+		  <a href="{{ url_for('update_profile') }}" class="card-link btn-primary btn text-center">Update Profile</a>
+		</div>
+		<footer class="text-light"> <small>Note:</small> <small class="text-muted"> Username cannot be changed/updated </small> </footer>
+	  </div>
+
+ {% endblock content %}

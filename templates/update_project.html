@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<form class="text-info" method="POST" action="">
+    <div class="form-group">
+      <label for="inputAddress">Title</label>
+      <input type="text" class="form-control" name="title" id="title" value="{{ project.title }}" placeholder="Current Title">
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1">Description</label>
+        <textarea class="form-control" id="description" name="description" rows="5" placeholder="Current Description">{{ project.description }}</textarea>
+    </div>
+    <div>
+        <label for="managers">Managers</label>
+    </div>
+
+    <div class="form-group">
+
+      <div class="col-auto">
+        <div class="input-group mb-2">
+          <input type="email" list="emails" multiple class="form-control" name="managers" value={{ current_managers }} id="username_input_id" placeholder="Type in format of Username@Name saperated by commas">
+          <datalist id="emails"> 
+            {% for user in users %}
+            <option value="{{ user.username }}@{{ user.name }}">
+            {% endfor %}
+          </datalist>
+        </div>
+      </div>
+      <div>
+      </div>
+  </div>
+    <button type="submit" class="btn btn-info align-self-center">Update</button>
+  </form>
+
+  {% endblock content %}

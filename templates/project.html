@@ -1,0 +1,67 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="d-flex justify-content-center text-info">
+    <div class="p-2"><h1>{{ project.title }}</h1></div>
+</div>
+
+<div class="d-flex text-light">
+    <div class="p-2">Start Date: </div>
+    <div class="mr-auto p-2 text-info">{{ project.started_on }}</div>
+    <div class="p-2">Started by: </div>
+    <div class="mr-auto p-2"><span class="badge badge-info">{{ project.owner }}</span></div>
+    <div class="p-2">Last modified: </div>
+    <div class="p-2 text-info">{{ project.last_modified }}</div>
+</div>
+
+<div clss="d-flex text-light">
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text text-info bg-light p-1">Managers:</span>
+        </div>
+        {% for manager in project.managers.split(",") %}
+        <div class="p-1"><span class="badge badge-info">{{ manager }}</span></div>
+        {% endfor %}
+        {% if current_user.username in project.managers.split(",") %}
+        <div class="p-1 ml-auto"><a href="{{ url_for('update_project', project_id = project.id|int) }}" class="btn btn-outline-info">Update Project Details</a></div>
+        {% endif %}
+    </div>
+</div>
+<div class="d-flex text-light">
+    <div class="card-body">
+        <h5 class="card-title text-info">Description</h5>
+        <p class="card-text">{{ project.description }}</p>
+      </div>
+</div>
+<hr>
+<div class="d-flex text-light">
+    <div class="p-1"> <h5 class="card-title text-info">Bugs</h5></div>
+    <div class="p-1 ml-auto"><a href="{{ url_for('report_bug', project_id = project.id|int) }}" class="btn btn-outline-info">Report a Bug</a></div>
+
+</div>
+{% for bug in project_bugs %}
+<div class="jumbotron bg-dark text-info p-2">
+    <div class="d-flex">
+        <div class="p-2 text-info"><h5 class="title">{{ bug.title }}</h5></div>
+        <div class="ml-auto p-2 text-light">Last modified: </div>
+        <div class="p-2 text-info">{{ bug.last_modified }}</div>
+        <div class="ml-auto p-2"><a class="btn btn-outline-info" href="{{ url_for('bug',project_id=project.id, bug_title=bug.title) }}" role="button">Go to Bug</a></div>
+    </div>
+    <div class="d-flex text-light">
+        <div class="p-2">Status</div>
+        <div class="p-2"><span class="badge badge-info">{{ bug.status }}</span></div>
+        <div class="ml-auto p-2">Is the bug reproducible ?</div>
+        <div class="p-2"><span class="badge badge-success">{{ bug.reproducible }}</span></div>
+        <div class="ml-auto p-2">Priority</div>
+        <div class="p-2"><span class="badge badge-info">{{ bug.severity }}</span></div>
+    </div>
+</div>
+{% endfor %}
+{% if project_bugs|length == 0 %}
+<div class="jumbotron bg-dark text-info p-2">
+   <div class="d-flex justify-content-center">
+       <div class="p-2 text-info"><h5 class="title">No bugs on the project yet</h5></div>
+   </div>
+</div>
+{% endif %}
+
+{% endblock content %}

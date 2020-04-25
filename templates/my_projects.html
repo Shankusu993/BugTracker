@@ -1,0 +1,29 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="d-flex justify-content-center text-light">
+    <div class="p-2"><h1>Projects</h1></div>
+</div>
+{% if current_user.type == "Manager" %}
+<div class="d-flex justify-content-end">
+    <a href="{{ url_for('new_project') }}" class="btn btn-outline-success">New Project</a>
+</div>
+{% endif %}
+{% for project in projects %}
+<div class="jumbotron bg-dark text-info p-2">
+    <h1 class="display-3 title text-center">{{ project.title }}</h1>
+    
+    <div class="d-flex">
+        <div class="p-2 text-info"><h4 class="title"><u>Recent Issues</u></h4></div>
+        <div class="ml-auto p-2"><a class="btn btn-outline-info" href="{{ url_for('project',project_id=project.id) }}" role="button">Go to Project</a></div>
+    </div>
+    {% for bug in all_bugs %}
+    {% if bug.project_id|int == project.id %}
+    <div class="d-flex">
+        <div class="p-2 text-info"><h5 class="title">{{ bug.title }}</h5></div>
+        <div class="ml-auto p-2"><a class="btn btn-outline-info" href="{{ url_for('bug',project_id=project.id, bug_title=bug.title) }}" role="button">Go to Bug</a></div>
+    </div>
+    {% endif %}
+    {% endfor %}
+ </div>
+ {% endfor %}
+ {% endblock content %}

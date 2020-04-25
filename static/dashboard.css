@@ -1,0 +1,44 @@
+
+.gallery-images {
+    margin: 10px;
+    width: 270px;
+    height: 270px;
+    border-radius: 4%;
+    
+}
+
+.pro {
+    width: 125px;
+    height: 125px;
+}
+
+.gallery {
+    font-weight: 350;
+
+}
+
+
+.alum {
+    margin-left: auto;
+    margin-right: auto;
+    width: 10em
+   
+}
+
+.pro-pic {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.name {
+    text-align: center;
+    color: black;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.email {
+    text-align: center;
+    color: black;
+    font-weight: 500;
+}

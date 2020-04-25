@@ -1,0 +1,112 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<form class="text-info" method="POST" action="">
+    <div class="form-group">
+      <label for="inputAddress">Title</label>
+      <input type="text" class="form-control" id="title" name="title" value="{{ bug.title }}">
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlTextarea1">Description</label>
+        <textarea class="form-control" id="description" name="description" rows="5">{{ bug.description }}</textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="reproducible">Is the Bug Reproducible ?</label>
+        <select id="reproducible" name="reproducible" class="form-control">
+          {% if bug.reproducible == "unknown" or bug.reproducible == "Unknown" %}
+          <option selected>Unknown</option>
+          {% else %}
+          <option>Unknown</option>
+          {% endif %}
+          {% if bug.reproducible == "yes" or bug.reproducible == "YES" %}
+          <option selected>YES</option>
+          {% else %}
+          <option>YES</option>
+          {% endif %}
+          {% if bug.reproducible == "NO" or bug.reproducible == "no" %}
+          <option selected>NO</option>
+          {% else %}
+          <option>NO</option>
+          {% endif %}
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="status">Status</label>
+        <select id="status" name="status" class="form-control">
+          {% if bug.status == "unknown" or bug.status == "Unknown" %}
+          <option selected>Unknown</option>
+          {% else %}
+          <option>Unknown</option>
+          {% endif %}
+          {% if bug.status == "new" or bug.status == "New" %}
+          <option selected>New</option>
+          {% else %}
+          <option>New</option>
+          {% endif %}
+          {% if bug.status == "resolved" or bug.status == "Resolved" %}
+          <option selected>Resolved</option>
+          {% else %}
+          <option>Resolved</option>
+          {% endif %}
+          {% if bug.status == "verified" or bug.status == "Verified" %}
+          <option selected>Verified</option>
+          {% else %}
+          <option>Verified</option>
+          {% endif %}
+          {% if bug.status == "processing" or bug.status == "Processing" %}
+          <option selected>In Progress</option>
+          {% else %}
+          <option>In Progress</option>
+          {% endif %}
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="severity">Priority</label>
+        <select id="severity" name="severity" class="form-control">
+          {% if bug.severity == "unknown" %}
+          <option selected>Unknown</option>
+          {% else %}
+          <option>Unknown</option>
+          {% endif %}
+          {% if bug.severity == "high" %}
+          <option selected>High</option>
+          {% else %}
+          <option>High</option>
+          {% endif %}
+          {% if bug.severity == "regular" %}
+          <option selected>Regular</option>
+          {% else %}
+          <option>Regular</option>
+          {% endif %}
+          {% if bug.severity == "low" %}
+          <option selected>Low</option>
+          {% else %}
+          <option>Low</option>
+          {% endif %}
+        </select>
+      </div>
+    </div>
+    <div>
+        <label for="assignees">Assignees</label>
+    </div>
+
+    <div class="form-group">
+
+        <div class="col-auto">
+          <div class="input-group mb-2">
+            <input type="email" list="emails" multiple class="form-control"  name="assignees" value="{{ current_assignees }}" id="username_input_id" placeholder="Type in format of Username@Name saperated by commas">
+            <datalist id="emails"> 
+              {% for user in users %}
+              <option value="{{ user.username }}@{{ user.name }}">
+              {% endfor %}
+            </datalist>
+          </div>
+        </div>
+        <div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-info align-self-center">Update</button>
+  </form>
+
+  {% endblock content %}
