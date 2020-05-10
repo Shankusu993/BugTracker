@@ -83,7 +83,7 @@ class Bug(db.Model):
     reproducible = db.Column(db.String, nullable=False)
     status = db.Column(db.String, nullable=False)
     severity = db.Column(db.String, nullable=False)
-    assignees = db.Column(db.String, nullable=True)
+    assignees = db.Column(db.String, nullable=False)
     discussion = db.Column(db.String, nullable=True)
 
 class Project(db.Model):
@@ -174,7 +174,7 @@ def update_bug(bug_id):
     current_assignees = ''
     current_assignees_list = []
     for user in all_users:
-        if user.username in bug.assignees.split(","):
+        if bug.assignees != None and user.username in bug.assignees.split(","):
             current_assignees_list.append(user.username + '@' + user.name)
     current_assignees = ','.join(current_assignees_list)
     if request.method == "GET":
@@ -308,7 +308,7 @@ def my_projects():
         if current_user.username == a_project.owner or  current_user.username in a_project.managers.split(","):
             projects.append(a_project)
     for a_bug in all_bugs:
-        if current_user.username == a_bug.reportee or current_user.username in a_bug.assignees.split(","):
+        if current_user.username == a_bug.reportee or (a_bug.assignees != None and current_user.username in a_bug.assignees.split(",")):
             bugs_project = Project.query.get(int(a_bug.project_id))
             if bugs_project not in projects:
                 projects.append(bugs_project)
@@ -405,7 +405,7 @@ def report_bug(project_id):
             reportee = current_user.username
             last_modified = datetime.datetime.now()
             last_modified = last_modified.strftime("%d") + " " + last_modified.strftime("%B") + " " + last_modified.strftime("%Y") 
-            bug=Bug(project_id=project_id, title=title, description=description, last_modified=last_modified, reproducible=reproducible, reportee=reportee, date_reported=last_modified, severity="unknown", status="unknown")
+            bug=Bug(project_id=project_id, title=title, description=description, last_modified=last_modified, reproducible=reproducible, reportee=reportee, date_reported=last_modified, severity="unknown", status="unknown", assignees="")
             db.session.add(bug)
             db.session.commit()
             flash(f'Bug reported by {current_user.username}!','success')
